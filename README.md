@@ -160,7 +160,7 @@ bi-platform/
 
 ### 工程化工具
 
-*   Monorepo (Rush/Lerna) - 包管理
+*   Monorepo (PNPM) - 包管理
 
 *   ESLint + Prettier - 代码规范
 
