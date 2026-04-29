@@ -719,3 +719,42 @@ export const CustomThemePlugin: Plugin = {
 4.  高可靠性 - 错误处理、监控、容器化部署
 
 5.  用户友好 - 拖拽设计、主题系统、响应式设计
+
+## 仓库内已实现内容（可运行 / 可部署）
+
+本仓库已按上文目录搭建 **pnpm Monorepo**，并提供可运行的 **仪表板应用**（`apps/dashboard`）：
+
+| 路径 | 说明 |
+|------|------|
+| `packages/core` | 类型定义（图表、数据源、设计器、主题等） |
+| `packages/chart-engine` | ECharts 渲染器 + `createChartEngine()` |
+| `packages/data-source` | Mock 数据源管理器与内置数据集 |
+| `packages/designer` | 设计器状态（组件库、画布、撤销/重做） |
+| `apps/dashboard` | Vue 3 + Vite + Pinia + Element Plus，路由与页面 |
+
+数据默认走 **本地 Mock**（`apps/dashboard/src/api/mock.ts` + `packages/data-source`），无需后端即可预览。
+
+### 本地开发
+
+```bash
+pnpm install
+pnpm dev
+```
+
+浏览器访问开发服务器地址即可。
+
+### 生产构建
+
+```bash
+pnpm build
+```
+
+产物在 `apps/dashboard/dist`。
+
+### 部署到 GitHub Pages
+
+1. 在仓库 **Settings → Pages** 中，将 **Build and deployment** 来源设为 **GitHub Actions**。
+2. 推送至 `main` 分支会触发 `.github/workflows/deploy-pages.yml`：在 CI 中设置 `GITHUB_ACTIONS`，构建时自动使用 **`/<仓库名>/`** 作为 Vite `base`（例如 `https://<user>.github.io/bi-platform/`）。
+3. 若仓库名或自定义域名导致路径不是 `/<repo>/`，可在构建前设置环境变量 **`VITE_BASE_PATH`**（须以 `/` 开头并以 `/` 结尾）。
+
+设计器中「保存」会将布局写入 **sessionStorage**，刷新预览页可看到当前会话内的修改（仍为纯前端演示）。
